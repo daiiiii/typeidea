@@ -15,6 +15,9 @@ class Catagory(models.Model):
     is_nav = models.BooleanField(default=False, verbose_name="是否为导航")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者") #CASCADE指联级删除，即当外键被删除时，其关联的内容也被删除
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = verbose_name_plural = '分类'
 
@@ -32,6 +35,8 @@ class Tag(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者") #CASCADE指联级删除，即当外键被删除时，其关联的内容也被删除
 
+    def __str__(self):
+        return self.name
     class Meta:
         verbose_name = verbose_name_plural = '标签'
 
@@ -49,11 +54,15 @@ class Post(models.Model):
     title = models.CharField(verbose_name="标题", max_length=255)
     desc = models.CharField(verbose_name="摘要", max_length=1024, blank=True)
     content = models.TextField(verbose_name="正文", help_text="正文必须为MarkDown格式")
-    statue = models.PositiveIntegerField(verbose_name="状态", choices=STATUS_ITEMS, default=STATUS_NORMAL)
+    status = models.PositiveIntegerField(verbose_name="状态", choices=STATUS_ITEMS, default=STATUS_NORMAL)
     category = models.ForeignKey(Catagory, verbose_name="分类", on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag, verbose_name="标签")
     owner = models.ForeignKey(User, verbose_name="作者", on_delete=models.CASCADE)
-    create_time = models.DateTimeField(verbose_name="创建时间", auto_now=False, auto_now_add=True)
+    created_time = models.DateTimeField(verbose_name="创建时间", auto_now=False, auto_now_add=True)
+
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = verbose_name_plural = "文章"
