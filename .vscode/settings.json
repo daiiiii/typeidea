@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\envs\\Django\\python.exe"
+    "python.pythonPath": "C:\\Users\\25863\\.virtualenvs\\test-MwTvcwtZ\\Scripts\\python.exe",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ]
 }

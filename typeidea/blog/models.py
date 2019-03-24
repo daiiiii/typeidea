@@ -37,4 +37,24 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    pass
+    STATUS_NORMAL = 1
+    STATUS_DELETE = 0
+    STATUS_DRAFT = 2
+    STATUS_ITEMS = (
+        (STATUS_NORMAL, '正常'),
+        (STATUS_DELETE, '删除'),
+        (STATUS_DRAFT, '草稿')
+    )
+
+    title = models.CharField(verbose_name="标题", max_length=255)
+    desc = models.CharField(verbose_name="摘要", max_length=1024, blank=True)
+    content = models.TextField(verbose_name="正文", help_text="正文必须为MarkDown格式")
+    statue = models.PositiveIntegerField(verbose_name="状态", choices=STATUS_ITEMS, default=STATUS_NORMAL)
+    category = models.ForeignKey(Catagory, verbose_name="分类", on_delete=models.CASCADE)
+    tag = models.ManyToManyField(Tag, verbose_name="标签")
+    owner = models.ForeignKey(User, verbose_name="作者", on_delete=models.CASCADE)
+    create_time = models.DateTimeField(verbose_name="创建时间", auto_now=False, auto_now_add=True)
+
+    class Meta:
+        verbose_name = verbose_name_plural = "文章"
+        ordering = ['-id']
